@@ -109,6 +109,12 @@ const ClickedWriteupLandscape = styled.div`
 
 const ClickedWriteupPortrait = styled.div`
   position: absolute;
+  left: 6rem;
+  bottom: 4.6rem;
+  margin-top: 50px;
+  height: 405px;
+  width: 700px;
+  //   border: 1px solid red;
 `;
 
 const BackButtonLandscape = styled.button`
@@ -126,7 +132,22 @@ const BackButtonLandscape = styled.button`
   cursor: pointer;
 `;
 
-const ClickedPhotoLandscape = styled.div`
+const BackButtonPortrait = styled.button`
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  font-family: var(--font-secondary), sans-serif;
+  font-size: 3.6rem;
+  font-weight: 200;
+  //   text-transform: uppercase;
+  background: none;
+  border: none;
+  border-bottom: 2px solid var(--color-white);
+  color: var(--color-white);
+  cursor: pointer;
+`;
+
+const ClickedPhotoIdxLandscape = styled.div`
   margin-top: 50px;
   height: 405px;
   //   border: 2px solid red;
@@ -137,7 +158,7 @@ const ClickedPhotoLandscape = styled.div`
   }
 `;
 
-const ClickedPhotoPortrait = styled.div`
+const ClickedPhotoIdxPortrait = styled.div`
   position: absolute;
   top: 6.5rem;
   right: 6rem;
@@ -155,6 +176,7 @@ const ClickedPhotoPortrait = styled.div`
 
 const ContentComp = ({ color, loc, locPhotos }) => {
   const [clickedPhotoIdx, setClickedPhotoIdx] = useState(NaN);
+  const [scrollLoc, setScrollLoc] = useState(0);
   //   if (clickedPhotoIdx + 1) {
   //     // console.log(clickedPhotoIdx);
   //     // console.log(locPhotos[clickedPhotoIdx]);
@@ -162,10 +184,11 @@ const ContentComp = ({ color, loc, locPhotos }) => {
   const contentBodyRef = useRef();
   useEffect(() => {
     if (contentBodyRef.current) {
+      contentBodyRef.current.scroll(scrollLoc, 0);
       const scrollLeftMax =
         contentBodyRef.current.scrollWidth - contentBodyRef.current.clientWidth;
       contentBodyRef.current.addEventListener("wheel", () => {
-        loc.split("").forEach((char, idx) => {
+        loc.split("").forEach((_char, idx) => {
           if (
             contentBodyRef.current.scrollLeft >=
             Math.round(((idx + 1) / 8) * scrollLeftMax)
@@ -190,6 +213,7 @@ const ContentComp = ({ color, loc, locPhotos }) => {
             photo.childNodes[2].style.opacity = "1";
           });
           photo.addEventListener("click", () => {
+            setScrollLoc(contentBodyRef.current.scrollLeft);
             setClickedPhotoIdx(idx);
           });
         });
@@ -200,20 +224,34 @@ const ContentComp = ({ color, loc, locPhotos }) => {
     setClickedPhotoIdx(NaN);
   };
 
-  const conjureClickedPhoto = aspectRatio => {
-    console.log(aspectRatio);
+  const conjureClickedPhotoIdx = aspectRatio => {
     if (aspectRatio < 1) {
       return (
-        <ClickedPhotoPortrait aspectRatio={aspectRatio}>
-          <Img fluid={locPhotos[clickedPhotoIdx].fluid} objectFit="cover" />
-        </ClickedPhotoPortrait>
+        <>
+          <ClickedPhotoIdxPortrait aspectRatio={aspectRatio}>
+            <Img fluid={locPhotos[clickedPhotoIdx].fluid} />
+          </ClickedPhotoIdxPortrait>
+          <ClickedWriteupPortrait>
+            <BackButtonPortrait color={color} onClick={backClickHandler}>
+              <span
+                style={{
+                  display: "inline-block",
+                  transform: "translateY(-4px)"
+                }}
+              >
+                &larr;
+              </span>
+              Back{" "}
+            </BackButtonPortrait>
+          </ClickedWriteupPortrait>
+        </>
       );
     } else if (aspectRatio > 1) {
       return (
         <>
-          <ClickedPhotoLandscape aspectRatio={aspectRatio}>
-            <Img fluid={locPhotos[clickedPhotoIdx].fluid} objectFit="cover" />
-          </ClickedPhotoLandscape>
+          <ClickedPhotoIdxLandscape aspectRatio={aspectRatio}>
+            <Img fluid={locPhotos[clickedPhotoIdx].fluid} />
+          </ClickedPhotoIdxLandscape>
           <ClickedWriteupLandscape>
             <BackButtonLandscape color={color} onClick={backClickHandler}>
               Back{" "}
@@ -231,9 +269,9 @@ const ContentComp = ({ color, loc, locPhotos }) => {
       );
     } else {
       return (
-        <ClickedPhotoPortrait aspectRatio={aspectRatio}>
-          <Img fluid={locPhotos[clickedPhotoIdx].fluid} objectFit="cover" />
-        </ClickedPhotoPortrait>
+        <ClickedPhotoIdxPortrait aspectRatio={aspectRatio}>
+          <Img fluid={locPhotos[clickedPhotoIdx].fluid} />
+        </ClickedPhotoIdxPortrait>
       );
     }
   };
@@ -250,7 +288,7 @@ const ContentComp = ({ color, loc, locPhotos }) => {
         })}
       </ContentTitle>
       {clickedPhotoIdx + 1 ? (
-        conjureClickedPhoto(locPhotos[clickedPhotoIdx].fluid.aspectRatio)
+        conjureClickedPhotoIdx(locPhotos[clickedPhotoIdx].fluid.aspectRatio)
       ) : (
         <ContentBody ref={contentBodyRef}>
           <Writeup>
