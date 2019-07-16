@@ -8,6 +8,10 @@ const Defaults = createGlobalStyle`
         --font-primary: Lato;
         --font-secondary: Oswald;
 
+        --color-one: hsl(340, 60%, 65%);
+        --color-two: hsl(250, 60%, 65%);
+        --color-three: hsl(220, 60%, 65%);
+        --color-four: hsl(160, 60%, 40%);
         --color-white: #fcfcfc;
     }
 
