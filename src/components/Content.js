@@ -124,7 +124,6 @@ const BackButtonLandscape = styled.button`
   font-family: var(--font-secondary), sans-serif;
   font-size: 3.6rem;
   font-weight: 200;
-  //   text-transform: uppercase;
   background: none;
   border: none;
   border-bottom: 2px solid var(--color-white);
@@ -132,19 +131,9 @@ const BackButtonLandscape = styled.button`
   cursor: pointer;
 `;
 
-const BackButtonPortrait = styled.button`
-  position: absolute;
-  bottom: 0;
+const BackButtonPortrait = styled(BackButtonLandscape)`
+  right: none;
   left: 0;
-  font-family: var(--font-secondary), sans-serif;
-  font-size: 3.6rem;
-  font-weight: 200;
-  //   text-transform: uppercase;
-  background: none;
-  border: none;
-  border-bottom: 2px solid var(--color-white);
-  color: var(--color-white);
-  cursor: pointer;
 `;
 
 const ClickedPhotoIdxLandscape = styled.div`
