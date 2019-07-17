@@ -9,10 +9,15 @@ const Defaults = createGlobalStyle`
         --font-secondary: Oswald;
 
         --color-one: hsl(340, 60%, 65%);
+        --color-one-aa-accessible-large: hsl(340, 60%, 51%);
         --color-two: hsl(250, 60%, 65%);
+        --color-two-aa-accessible-large: hsl(250, 60%, 60%);
         --color-three: hsl(220, 60%, 65%);
+        --color-three-aa-accessible-large: hsl(220, 60%, 52%);
         --color-four: hsl(160, 60%, 40%);
+        --color-four-aa-accessible-large: hsl(160, 61%, 31%);
         --color-white: #fcfcfc;
+        --color-gray: #cccccc;
     }
 
     * {

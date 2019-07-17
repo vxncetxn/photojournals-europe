@@ -68,7 +68,8 @@ const Writeup = styled.div`
   font-family: var(--font-secondary), sans-serif;
   font-size: 3.6rem;
   font-weight: 200;
-  color: #f0f0f0;
+  //   color: var(--color-white);
+  //   color: #e6e6e6;
   line-height: 1.6;
   width: 60vw;
   flex: 0 0 auto;
@@ -138,7 +139,10 @@ const BackButtonPortrait = styled(BackButtonLandscape)`
 
 const ClickedPhotoIdxLandscape = styled.div`
   margin-top: 50px;
+  width: 700px;
   height: 405px;
+  display: flex;
+  justify-content: center;
   //   border: 2px solid red;
 
   & .gatsby-image-wrapper {
@@ -281,12 +285,16 @@ const ContentComp = ({ color, loc, locPhotos }) => {
       ) : (
         <ContentBody ref={contentBodyRef}>
           <Writeup>
-            Istanbul is a major city in Turkey that straddles Europe and Asia
-            across the Bosphorus Strait. Its Old City reflects cultural
-            influences of the many empires that once ruled here. In the
-            Sultanahmet district, the open-air, Roman-era Hippodrome was for
-            centuries the site of chariot races, and Egyptian obelisks also
-            remain.
+            <span style={{ color: "var(--color-white)" }}>
+              Istanbul is a major city in Turkey that straddles Europe and Asia
+              across the Bosphorus Strait. Its Old City reflects cultural
+              influences of the many empires that once ruled here.
+            </span>{" "}
+            <span style={{ color: "var(--color-gray)" }}>
+              In the Sultanahmet district, the open-air, Roman-era Hippodrome
+              was for centuries the site of chariot races, and Egyptian obelisks
+              also remain.
+            </span>
           </Writeup>
           <Photos className={`content-photos-${loc}`}>
             {locPhotos.map((photo, idx) => {

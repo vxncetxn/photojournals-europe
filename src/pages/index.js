@@ -5,12 +5,12 @@ import Defaults from "../components/Defaults";
 import Hero from "../components/Hero";
 import Content from "../components/Content";
 
-const locs = ["wroclaw", "istanbul", "milan", "paris", "london"];
+const locs = ["wroclaw", "istanbul", "milan", "interlaken", "lauterbrunnen"];
 const colors = [
-  "var(--color-one)",
-  "var(--color-two)",
-  "var(--color-three)",
-  "var(--color-four)"
+  "var(--color-one-aa-accessible-large)",
+  "var(--color-two-aa-accessible-large)",
+  "var(--color-three-aa-accessible-large)",
+  "var(--color-four-aa-accessible-large)"
 ];
 
 export default () => {

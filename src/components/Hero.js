@@ -4,7 +4,7 @@ import { window } from "browser-monads";
 
 const BlinkOne = keyframes`
   0% {
-    color: palevioletred;
+    color: var(--color-one-aa-accessible-large);
   }
   
   25% {
@@ -12,13 +12,13 @@ const BlinkOne = keyframes`
   }
   
   100% {
-    color: palevioletred;
+    color: var(--color-one-aa-accessible-large);
   }
 `;
 
 const BlinkTwo = keyframes`
   0% {
-    color: palevioletred;
+    color: var(--color-one-aa-accessible-large);
   }
   
   50% {
@@ -26,13 +26,13 @@ const BlinkTwo = keyframes`
   }
   
   100% {
-    color: palevioletred;
+    color: var(--color-one-aa-accessible-large);
   }
 `;
 
 const BlinkThree = keyframes`
   0% {
-    color: palevioletred;
+    color: var(--color-one-aa-accessible-large);
   }
   
   75% {
@@ -40,13 +40,13 @@ const BlinkThree = keyframes`
   }
   
   100% {
-    color: palevioletred;
+    color: var(--color-one-aa-accessible-large);
   }
 `;
 
 const BlinkFour = keyframes`
   0% {
-    fill: palevioletred;
+    fill: var(--color-one-aa-accessible-large);
   }
   
   95% {
@@ -54,7 +54,7 @@ const BlinkFour = keyframes`
   }
   
   100% {
-    fill: palevioletred;
+    fill: var(--color-one-aa-accessible-large);
   }
 `;
 
@@ -64,7 +64,7 @@ const Hero = styled.div`
   width: 100%;
   //   height: 100vh;
   height: ${() => `${window.innerHeight}px`};
-  background-color: palevioletred;
+  background-color: var(--color-one-aa-accessible-large);
   //   border: 2px solid blue;
 `;
 
@@ -90,7 +90,7 @@ const TitleOne = styled.h1`
   text-transform: uppercase;
   line-height: 1;
   letter-spacing: 1px;
-  color: palevioletred;
+  color: var(--color-one-aa-accessible-large);
   text-shadow: -1px -1px 0px var(--color-white), 0px -1px 0px var(--color-white),
     1px -1px 0px var(--color-white), -1px 0px 0px var(--color-white),
     1px 0px 0px var(--color-white), -1px 1px 0px var(--color-white),
@@ -168,7 +168,7 @@ const HeroComp = () => {
           xmlns="http://www.w3.org/2000/svg"
           width="40px"
           height="40px"
-          fill="palevioletred"
+          fill="var(--color-one-accessible-large)"
           stroke="var(--color-white)"
           strokeWidth="12px"
         >
