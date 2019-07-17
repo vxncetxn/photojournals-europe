@@ -99,24 +99,24 @@ const StyledImg = styled(Img)`
   cursor: pointer;
 `;
 
-const ClickedWriteupLandscape = styled.div`
-  position: absolute;
-  top: 6.5rem;
-  right: 6rem;
-  width: 600px;
-  height: 600px;
-  //   border: 2px solid red;
-`;
+// const ClickedWriteupLandscape = styled.div`
+//   position: absolute;
+//   top: 6.5rem;
+//   right: 6rem;
+//   width: 600px;
+//   height: 600px;
+//   //   border: 2px solid red;
+// `;
 
-const ClickedWriteupPortrait = styled.div`
-  position: absolute;
-  left: 6rem;
-  bottom: 4.6rem;
-  margin-top: 50px;
-  height: 405px;
-  width: 700px;
-  //   border: 1px solid red;
-`;
+// const ClickedWriteupPortrait = styled.div`
+//   position: absolute;
+//   left: 6rem;
+//   bottom: 4.6rem;
+//   margin-top: 50px;
+//   height: 405px;
+//   width: 700px;
+//   //   border: 1px solid red;
+// `;
 
 const BackButtonLandscape = styled.button`
   position: absolute;
@@ -132,39 +132,64 @@ const BackButtonLandscape = styled.button`
   cursor: pointer;
 `;
 
-const BackButtonPortrait = styled(BackButtonLandscape)`
-  right: none;
-  left: 0;
-`;
+// const BackButtonPortrait = styled(BackButtonLandscape)`
+//   right: none;
+//   left: 0;
+// `;
 
-const ClickedPhotoIdxLandscape = styled.div`
-  margin-top: 50px;
-  width: 700px;
-  height: 405px;
-  display: flex;
+// const ClickedPhotoIdxLandscape = styled.div`
+//   margin-top: 50px;
+//   width: 700px;
+//   height: 405px;
+//   display: flex;
+//   justify-content: center;
+//   //   border: 2px solid red;
+
+//   & .gatsby-image-wrapper {
+//     width: ${props => props.aspectRatio * 405}px;
+//     height: 405px;
+//   }
+// `;
+
+// const ClickedPhotoIdxPortrait = styled.div`
+//   position: absolute;
+//   top: 6.5rem;
+//   right: 6rem;
+//   width: 600px;
+//   height: 600px;
+//   //   border: 2px solid red;
+//   display: flex;
+//   justify-content: center;
+
+//   & .gatsby-image-wrapper {
+//     width: ${props => props.aspectRatio * 600}px;
+//     height: 600px;
+//   }
+// `;
+
+const ClickedPhoto = styled.div`
+  display: inline-flex;
   justify-content: center;
+  width: 1084.5px;
+  //   width: 915px;
+  height: 610px;
   //   border: 2px solid red;
 
   & .gatsby-image-wrapper {
-    width: ${props => props.aspectRatio * 405}px;
-    height: 405px;
+    width: ${props => props.aspectRatio * 610}px;
+    height: 610px;
   }
 `;
 
-const ClickedPhotoIdxPortrait = styled.div`
-  position: absolute;
-  top: 6.5rem;
-  right: 6rem;
-  width: 600px;
-  height: 600px;
-  //   border: 2px solid red;
-  display: flex;
-  justify-content: center;
-
-  & .gatsby-image-wrapper {
-    width: ${props => props.aspectRatio * 600}px;
-    height: 600px;
-  }
+const ClickedWriteup = styled.div`
+  position: relative;
+  display: inline-block;
+  margin-left: 30px;
+  //   margin-left: 50px;
+  width: 205.5px;
+  //   width: 350px;
+  height: 610px;
+  //   border: 2px solid blue;
 `;
 
 const ContentComp = ({ color, loc, locPhotos }) => {
@@ -175,6 +200,14 @@ const ContentComp = ({ color, loc, locPhotos }) => {
   //     // console.log(locPhotos[clickedPhotoIdx]);
   //   }
   const contentBodyRef = useRef();
+
+  //   if (clickedPhotoIdx + 1) {
+  //     console.log(
+  //       locPhotos[clickedPhotoIdx].fluid.aspectRatio,
+  //       locPhotos[clickedPhotoIdx].fluid.aspectRatio * 610
+  //     );
+  //   }
+
   useEffect(() => {
     if (contentBodyRef.current) {
       contentBodyRef.current.scroll(scrollLoc, 0);
@@ -217,35 +250,74 @@ const ContentComp = ({ color, loc, locPhotos }) => {
     setClickedPhotoIdx(NaN);
   };
 
-  const conjureClickedPhotoIdx = aspectRatio => {
-    if (aspectRatio < 1) {
-      return (
+  //   const conjureClickedPhotoIdx = aspectRatio => {
+  //     if (aspectRatio < 1) {
+  //       return (
+  //         <>
+  //           <ClickedPhotoIdxPortrait aspectRatio={aspectRatio}>
+  //             <Img
+  //               fluid={locPhotos[clickedPhotoIdx].fluid}
+  //               style={{
+  //                 objectFit: "none",
+  //                 objectPosition: "50% 50%"
+  //               }}
+  //             />
+  //           </ClickedPhotoIdxPortrait>
+  //           <ClickedWriteupPortrait>
+  //             <BackButtonPortrait color={color} onClick={backClickHandler}>
+  //               <span
+  //                 style={{
+  //                   display: "inline-block",
+  //                   transform: "translateY(-4px)"
+  //                 }}
+  //               >
+  //                 &larr;
+  //               </span>
+  //               Back{" "}
+  //             </BackButtonPortrait>
+  //           </ClickedWriteupPortrait>
+  //         </>
+  //       );
+  //     } else if (aspectRatio > 1) {
+  //       return (
+  //         <>
+  //           <ClickedPhotoIdxLandscape aspectRatio={aspectRatio}>
+  //             <Img fluid={locPhotos[clickedPhotoIdx].fluid} />
+  //           </ClickedPhotoIdxLandscape>
+  //           <ClickedWriteupLandscape>
+  //             <BackButtonLandscape color={color} onClick={backClickHandler}>
+  //               Back{" "}
+  //               <span
+  //                 style={{
+  //                   display: "inline-block",
+  //                   transform: "translateY(-4px)"
+  //                 }}
+  //               >
+  //                 &rarr;
+  //               </span>
+  //             </BackButtonLandscape>
+  //           </ClickedWriteupLandscape>
+  //         </>
+  //       );
+  //     } else {
+  //       return (
+  //         <ClickedPhotoIdxPortrait aspectRatio={aspectRatio}>
+  //           <Img fluid={locPhotos[clickedPhotoIdx].fluid} />
+  //         </ClickedPhotoIdxPortrait>
+  //       );
+  //     }
+  //   };
+
+  return (
+    <Content color={color}>
+      {clickedPhotoIdx + 1 ? (
         <>
-          <ClickedPhotoIdxPortrait aspectRatio={aspectRatio}>
+          <ClickedPhoto
+            aspectRatio={locPhotos[clickedPhotoIdx].fluid.aspectRatio}
+          >
             <Img fluid={locPhotos[clickedPhotoIdx].fluid} />
-          </ClickedPhotoIdxPortrait>
-          <ClickedWriteupPortrait>
-            <BackButtonPortrait color={color} onClick={backClickHandler}>
-              <span
-                style={{
-                  display: "inline-block",
-                  transform: "translateY(-4px)"
-                }}
-              >
-                &larr;
-              </span>
-              Back{" "}
-            </BackButtonPortrait>
-          </ClickedWriteupPortrait>
-        </>
-      );
-    } else if (aspectRatio > 1) {
-      return (
-        <>
-          <ClickedPhotoIdxLandscape aspectRatio={aspectRatio}>
-            <Img fluid={locPhotos[clickedPhotoIdx].fluid} />
-          </ClickedPhotoIdxLandscape>
-          <ClickedWriteupLandscape>
+          </ClickedPhoto>
+          <ClickedWriteup>
             <BackButtonLandscape color={color} onClick={backClickHandler}>
               Back{" "}
               <span
@@ -257,21 +329,42 @@ const ContentComp = ({ color, loc, locPhotos }) => {
                 &rarr;
               </span>
             </BackButtonLandscape>
-          </ClickedWriteupLandscape>
+          </ClickedWriteup>
         </>
-      );
-    } else {
-      return (
-        <ClickedPhotoIdxPortrait aspectRatio={aspectRatio}>
-          <Img fluid={locPhotos[clickedPhotoIdx].fluid} />
-        </ClickedPhotoIdxPortrait>
-      );
-    }
-  };
+      ) : (
+        <>
+          <ContentTitle color={color}>
+            {loc.split("").map((char, idx) => {
+              return (
+                <span key={idx} className={`${loc}-${idx + 1}`}>
+                  {char}
+                </span>
+              );
+            })}
+          </ContentTitle>
+          <ContentBody ref={contentBodyRef}>
+            <Writeup>
+              <span style={{ color: "var(--color-white)" }}>
+                Istanbul is a major city in Turkey that straddles Europe and
+                Asia across the Bosphorus Strait. Its Old City reflects cultural
+                influences of the many empires that once ruled here.
+              </span>{" "}
+              <span style={{ color: "var(--color-gray)" }}>
+                In the Sultanahmet district, the open-air, Roman-era Hippodrome
+                was for centuries the site of chariot races, and Egyptian
+                obelisks also remain.
+              </span>
+            </Writeup>
+            <Photos className={`content-photos-${loc}`}>
+              {locPhotos.map((photo, idx) => {
+                return <StyledImg key={idx} fluid={photo.fluid} />;
+              })}
+            </Photos>
+          </ContentBody>
+        </>
+      )}
 
-  return (
-    <Content color={color}>
-      <ContentTitle color={color}>
+      {/* <ContentTitle color={color}>
         {loc.split("").map((char, idx) => {
           return (
             <span key={idx} className={`${loc}-${idx + 1}`}>
@@ -302,7 +395,7 @@ const ContentComp = ({ color, loc, locPhotos }) => {
             })}
           </Photos>
         </ContentBody>
-      )}
+      )} */}
     </Content>
   );
 };
