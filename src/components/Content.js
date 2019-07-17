@@ -210,9 +210,22 @@ const ContentComp = ({ color, loc, locPhotos }) => {
 
   useEffect(() => {
     if (contentBodyRef.current) {
-      contentBodyRef.current.scroll(scrollLoc, 0);
       const scrollLeftMax =
         contentBodyRef.current.scrollWidth - contentBodyRef.current.clientWidth;
+
+      contentBodyRef.current.scroll(scrollLoc, 0);
+
+      document
+        .querySelector(`.${loc}-title`)
+        .childNodes.forEach((node, idx) => {
+          if (
+            contentBodyRef.current.scrollLeft >=
+            Math.round(((idx + 1) / 8) * scrollLeftMax)
+          ) {
+            node.style.color = "#fcfcfc";
+          }
+        });
+
       contentBodyRef.current.addEventListener("wheel", () => {
         loc.split("").forEach((_char, idx) => {
           if (
@@ -333,7 +346,7 @@ const ContentComp = ({ color, loc, locPhotos }) => {
         </>
       ) : (
         <>
-          <ContentTitle color={color}>
+          <ContentTitle className={`${loc}-title`} color={color}>
             {loc.split("").map((char, idx) => {
               return (
                 <span key={idx} className={`${loc}-${idx + 1}`}>
