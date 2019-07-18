@@ -28,11 +28,17 @@ const Defaults = createGlobalStyle`
 
     html {
         font-size: 62.5%;
+        // scroll-snap-type: y mandatory;
     }
 
     body {
         position: relative;
+        // scroll-snap-type: y mandatory;
     }
+
+    // div[role=group] {
+    //     scroll-snap-type: y mandatory;
+    // }
 
     ul {
         list-style: none;

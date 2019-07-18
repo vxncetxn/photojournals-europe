@@ -18,6 +18,7 @@ const Content = styled.div`
   //   background-color: #ffcb53;
   background-color: ${props => props.color};
   padding: 5rem 6rem;
+  //   scroll-snap-align: center;
 `;
 
 const ContentTitle = styled.h2`

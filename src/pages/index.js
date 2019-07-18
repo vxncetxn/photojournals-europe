@@ -5,7 +5,17 @@ import Defaults from "../components/Defaults";
 import Hero from "../components/Hero";
 import Content from "../components/Content";
 
-const locs = ["wroclaw", "istanbul", "milan", "interlaken", "lauterbrunnen"];
+const locs = [
+  "wroclaw",
+  "istanbul",
+  "zurich",
+  "lucerne",
+  "interlaken",
+  "grindelwald",
+  "lauterbrunnen",
+  "appenzell",
+  "porto"
+];
 const colors = [
   "var(--color-one-aa-accessible-large)",
   "var(--color-two-aa-accessible-large)",

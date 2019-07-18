@@ -64,8 +64,10 @@ const Hero = styled.div`
   width: 100%;
   //   height: 100vh;
   height: ${() => `${window.innerHeight}px`};
+  min-height: 710px;
   background-color: var(--color-one-aa-accessible-large);
   //   border: 2px solid blue;
+  //   scroll-snap-align: center;
 `;
 
 const TitleContainer = styled.div`
