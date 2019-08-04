@@ -34,6 +34,7 @@ const Defaults = createGlobalStyle`
     body {
         position: relative;
         // scroll-snap-type: y mandatory;
+        overflow-x: hidden;
     }
 
     // div[role=group] {

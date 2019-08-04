@@ -19,6 +19,14 @@ const Content = styled.div`
   background-color: ${props => props.color};
   padding: 5rem 6rem;
   //   scroll-snap-align: center;
+
+  @media (max-width: 1000px) {
+    height: auto;
+  }
+
+  @media (max-width: 520px) {
+    padding: 5rem 3rem;
+  }
 `;
 
 const ContentTitle = styled.h2`
@@ -54,15 +62,29 @@ const ContentTitle = styled.h2`
   //     margin-right: 30px;
   //     transform: translateY(-40%);
   //   }
+
+  @media (max-width: 1000px) {
+    font-size: calc(11vw);
+    text-shadow: none;
+  }
+
+  // @media (max-width: 520px) {
+  //   font-size: calc(2rem + 14vw);
+  // }
 `;
 
 const ContentBody = styled.div`
   margin-top: 50px;
   height: 415px;
   display: flex;
-  //   border: 1px solid green;
   overflow: scroll;
   padding-bottom: 15px;
+
+  // border: 2px solid green;
+  @media (max-width: 1000px) {
+    height: auto;
+    flex-direction: column;
+  }
 `;
 
 const Writeup = styled.div`
@@ -72,22 +94,41 @@ const Writeup = styled.div`
   //   color: var(--color-white);
   //   color: #e6e6e6;
   line-height: 1.6;
-  width: 60vw;
+  width: 40vw;
   flex: 0 0 auto;
-  //   border: 1px solid red;
-  padding-right: 100px;
+  // border: 2px solid red;
+  // padding-right: 100px;
+  margin-right: 100px;
+
+  @media (max-width: 1000px) {
+    width: auto;
+    margin-right: 0px;
+    margin-bottom: 50px;
+    font-size: calc(2.5rem + 1vw);
+  }
 `;
 
 let Photos;
 Photos = styled.ul`
   //   width: 100vw;
   flex: 0 0 auto;
-  //   border: 1px solid blue;
+  // border: 2px solid blue;
   display: grid;
   grid-template-rows: 1fr 1fr;
   grid-auto-columns: 200px;
   gap: 2px;
   grid-auto-flow: column;
+
+  @media (max-width: 1000px) {
+    height: 400px;
+    width: auto;
+    overflow: scroll;
+  }
+
+  @media (max-width: 520px) {
+    height: calc(300px + 2vw);
+    // grid-auto-columns: calc(100px + 2vw);
+  }
 
   & ${Photos}:nth-child(1),
   & ${Photos}:nth-child(4n) {
@@ -360,13 +401,11 @@ const ContentComp = ({ color, loc, locPhotos }) => {
             <Writeup>
               <span style={{ color: "var(--color-white)" }}>
                 Istanbul is a major city in Turkey that straddles Europe and
-                Asia across the Bosphorus Strait. Its Old City reflects cultural
-                influences of the many empires that once ruled here.
+                Asia across the Bosphorus Strait.
               </span>{" "}
               <span style={{ color: "var(--color-gray)" }}>
                 In the Sultanahmet district, the open-air, Roman-era Hippodrome
-                was for centuries the site of chariot races, and Egyptian
-                obelisks also remain.
+                was for centuries the site of chariot races.
               </span>
             </Writeup>
             <Photos className={`content-photos-${loc}`}>

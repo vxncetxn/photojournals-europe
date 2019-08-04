@@ -68,6 +68,10 @@ const Hero = styled.div`
   background-color: var(--color-one-aa-accessible-large);
   //   border: 2px solid blue;
   //   scroll-snap-align: center;
+
+  @media (max-width: 520px) {
+    padding: 30px 30px;
+  }
 `;
 
 const TitleContainer = styled.div`
@@ -124,7 +128,7 @@ const HeroNav = styled.ul`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  //   border: 1px solid green;
+  // border: 1px solid green;
 
   & span,
   a {
@@ -133,6 +137,11 @@ const HeroNav = styled.ul`
     font-weight: 300;
     text-transform: uppercase;
     color: var(--color-white);
+    // border: 1px solid blue;
+  }
+
+  & > li + li {
+    margin-left: 50px;
   }
 `;
 
@@ -156,7 +165,7 @@ const HeroComp = () => {
               ❤
             </span>{" "}
             By Vance Tan */}
-            Portfolio Site
+            Portfolio
           </a>
         </li>
       </HeroNav>
