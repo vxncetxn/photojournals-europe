@@ -3,12 +3,6 @@ import Img from "gatsby-image";
 import styled from "styled-components";
 import { window } from "browser-monads";
 
-// const IntroBlink = keyframes`
-//   100% {
-//     color: #fcfcfc;
-//   }
-// `;
-
 const Content = styled.div`
   position: relative;
   width: 100%;
@@ -65,12 +59,20 @@ const ContentTitle = styled.h2`
 
   @media (max-width: 1000px) {
     font-size: calc(11vw);
-    text-shadow: none;
+    text-shadow: -1px -1px 0px var(--color-white),
+      0px -1px 0px var(--color-white), 1px -1px 0px var(--color-white),
+      -1px 0px 0px var(--color-white), 1px 0px 0px var(--color-white),
+      -1px 1px 0px var(--color-white), 0px 1px 0px var(--color-white),
+      1px 1px 0px var(--color-white);
   }
 
-  // @media (max-width: 520px) {
-  //   font-size: calc(2rem + 14vw);
-  // }
+  @media (max-width: 520px) {
+    text-shadow: -0.5px -0.5px 0px var(--color-white),
+      0px -0.5px 0px var(--color-white), 0.5px -0.5px 0px var(--color-white),
+      -0.5px 0px 0px var(--color-white), 0.5px 0px 0px var(--color-white),
+      -0.5px 0.5px 0px var(--color-white), 0px 0.5px 0px var(--color-white),
+      0.5px 0.5px 0px var(--color-white);
+  }
 `;
 
 const ContentBody = styled.div`
@@ -141,25 +143,6 @@ const StyledImg = styled(Img)`
   cursor: pointer;
 `;
 
-// const ClickedWriteupLandscape = styled.div`
-//   position: absolute;
-//   top: 6.5rem;
-//   right: 6rem;
-//   width: 600px;
-//   height: 600px;
-//   //   border: 2px solid red;
-// `;
-
-// const ClickedWriteupPortrait = styled.div`
-//   position: absolute;
-//   left: 6rem;
-//   bottom: 4.6rem;
-//   margin-top: 50px;
-//   height: 405px;
-//   width: 700px;
-//   //   border: 1px solid red;
-// `;
-
 const BackButtonLandscape = styled.button`
   position: absolute;
   bottom: 0;
@@ -174,52 +157,15 @@ const BackButtonLandscape = styled.button`
   cursor: pointer;
 `;
 
-// const BackButtonPortrait = styled(BackButtonLandscape)`
-//   right: none;
-//   left: 0;
-// `;
-
-// const ClickedPhotoIdxLandscape = styled.div`
-//   margin-top: 50px;
-//   width: 700px;
-//   height: 405px;
-//   display: flex;
-//   justify-content: center;
-//   //   border: 2px solid red;
-
-//   & .gatsby-image-wrapper {
-//     width: ${props => props.aspectRatio * 405}px;
-//     height: 405px;
-//   }
-// `;
-
-// const ClickedPhotoIdxPortrait = styled.div`
-//   position: absolute;
-//   top: 6.5rem;
-//   right: 6rem;
-//   width: 600px;
-//   height: 600px;
-//   //   border: 2px solid red;
-//   display: flex;
-//   justify-content: center;
-
-//   & .gatsby-image-wrapper {
-//     width: ${props => props.aspectRatio * 600}px;
-//     height: 600px;
-//   }
-// `;
-
 const ClickedPhoto = styled.div`
   display: inline-flex;
   justify-content: center;
   width: 1084.5px;
-  //   width: 915px;
-  height: 610px;
-  //   border: 2px solid red;
+  // border: 2px solid red;
 
   & .gatsby-image-wrapper {
     width: ${props => props.aspectRatio * 610}px;
-    height: 610px;
+    // border: 2px solid green;
   }
 `;
 
@@ -227,52 +173,71 @@ const ClickedWriteup = styled.div`
   position: relative;
   display: inline-block;
   margin-left: 30px;
-  //   margin-left: 50px;
-  width: 205.5px;
-  //   width: 350px;
+  flex: 1;
+  // width: 204.5px;
   height: 610px;
-  //   border: 2px solid blue;
+  // border: 2px solid blue;
 `;
 
 const ContentComp = ({ color, loc, locPhotos }) => {
   const [clickedPhotoIdx, setClickedPhotoIdx] = useState(NaN);
   const [scrollLoc, setScrollLoc] = useState(0);
-  //   if (clickedPhotoIdx + 1) {
-  //     // console.log(clickedPhotoIdx);
-  //     // console.log(locPhotos[clickedPhotoIdx]);
-  //   }
-  const contentBodyRef = useRef();
 
-  //   if (clickedPhotoIdx + 1) {
-  //     console.log(
-  //       locPhotos[clickedPhotoIdx].fluid.aspectRatio,
-  //       locPhotos[clickedPhotoIdx].fluid.aspectRatio * 610
-  //     );
-  //   }
+  const [isNarrow, setIsNarrow] = useState(window.innerWidth < 1001);
+  const [isOnMobile, setIsOnMobile] = useState(window.innerWidth < 521);
+
+  const scrollerRef = useRef();
 
   useEffect(() => {
-    if (contentBodyRef.current) {
-      const scrollLeftMax =
-        contentBodyRef.current.scrollWidth - contentBodyRef.current.clientWidth;
+    window.addEventListener("resize", () => {
+      if (window.innerWidth < 521) {
+        setIsOnMobile(true);
+        setIsNarrow(true);
+      } else if (window.innerWidth < 1001) {
+        setIsOnMobile(false);
+        setIsNarrow(true);
+      } else {
+        setIsOnMobile(false);
+        setIsNarrow(false);
+      }
+    });
+  }, []);
 
-      contentBodyRef.current.scroll(scrollLoc, 0);
+  useEffect(() => {
+    if (scrollerRef.current) {
+      // const scrollLeftMax =
+      //   scrollerRef.current.scrollWidth - scrollerRef.current.clientWidth;
+
+      scrollerRef.current.scroll(scrollLoc, 0);
 
       document
         .querySelector(`.${loc}-title`)
         .childNodes.forEach((node, idx) => {
           if (
-            contentBodyRef.current.scrollLeft >=
-            Math.round(((idx + 1) / 8) * scrollLeftMax)
+            scrollerRef.current.scrollLeft >=
+            Math.round(
+              ((idx + 1) / loc.length) *
+                (scrollerRef.current.scrollWidth -
+                  scrollerRef.current.clientWidth)
+            )
           ) {
             node.style.color = "#fcfcfc";
+          } else {
+            document.querySelector(
+              `.${loc}-${idx + 1}`
+            ).style.color = `${color}`;
           }
         });
 
-      contentBodyRef.current.addEventListener("wheel", () => {
+      scrollerRef.current.addEventListener("wheel", () => {
         loc.split("").forEach((_char, idx) => {
           if (
-            contentBodyRef.current.scrollLeft >=
-            Math.round(((idx + 1) / 8) * scrollLeftMax)
+            scrollerRef.current.scrollLeft >=
+            Math.round(
+              ((idx + 1) / loc.length) *
+                (scrollerRef.current.scrollWidth -
+                  scrollerRef.current.clientWidth)
+            )
           ) {
             document.querySelector(`.${loc}-${idx + 1}`).style.color =
               "#fcfcfc";
@@ -294,84 +259,27 @@ const ContentComp = ({ color, loc, locPhotos }) => {
             photo.childNodes[2].style.opacity = "1";
           });
           photo.addEventListener("click", () => {
-            setScrollLoc(contentBodyRef.current.scrollLeft);
+            setScrollLoc(scrollerRef.current.scrollLeft);
             setClickedPhotoIdx(idx);
           });
         });
     }
-  }, [clickedPhotoIdx]);
+  }, [clickedPhotoIdx, isNarrow]);
 
   const backClickHandler = () => {
     setClickedPhotoIdx(NaN);
   };
 
-  //   const conjureClickedPhotoIdx = aspectRatio => {
-  //     if (aspectRatio < 1) {
-  //       return (
-  //         <>
-  //           <ClickedPhotoIdxPortrait aspectRatio={aspectRatio}>
-  //             <Img
-  //               fluid={locPhotos[clickedPhotoIdx].fluid}
-  //               style={{
-  //                 objectFit: "none",
-  //                 objectPosition: "50% 50%"
-  //               }}
-  //             />
-  //           </ClickedPhotoIdxPortrait>
-  //           <ClickedWriteupPortrait>
-  //             <BackButtonPortrait color={color} onClick={backClickHandler}>
-  //               <span
-  //                 style={{
-  //                   display: "inline-block",
-  //                   transform: "translateY(-4px)"
-  //                 }}
-  //               >
-  //                 &larr;
-  //               </span>
-  //               Back{" "}
-  //             </BackButtonPortrait>
-  //           </ClickedWriteupPortrait>
-  //         </>
-  //       );
-  //     } else if (aspectRatio > 1) {
-  //       return (
-  //         <>
-  //           <ClickedPhotoIdxLandscape aspectRatio={aspectRatio}>
-  //             <Img fluid={locPhotos[clickedPhotoIdx].fluid} />
-  //           </ClickedPhotoIdxLandscape>
-  //           <ClickedWriteupLandscape>
-  //             <BackButtonLandscape color={color} onClick={backClickHandler}>
-  //               Back{" "}
-  //               <span
-  //                 style={{
-  //                   display: "inline-block",
-  //                   transform: "translateY(-4px)"
-  //                 }}
-  //               >
-  //                 &rarr;
-  //               </span>
-  //             </BackButtonLandscape>
-  //           </ClickedWriteupLandscape>
-  //         </>
-  //       );
-  //     } else {
-  //       return (
-  //         <ClickedPhotoIdxPortrait aspectRatio={aspectRatio}>
-  //           <Img fluid={locPhotos[clickedPhotoIdx].fluid} />
-  //         </ClickedPhotoIdxPortrait>
-  //       );
-  //     }
-  //   };
-
   return (
     <Content color={color}>
       {clickedPhotoIdx + 1 ? (
-        <>
+        <div style={{ display: "flex" }}>
           <ClickedPhoto
             aspectRatio={locPhotos[clickedPhotoIdx].fluid.aspectRatio}
           >
             <Img fluid={locPhotos[clickedPhotoIdx].fluid} />
           </ClickedPhoto>
+
           <ClickedWriteup>
             <BackButtonLandscape color={color} onClick={backClickHandler}>
               Back{" "}
@@ -385,7 +293,7 @@ const ContentComp = ({ color, loc, locPhotos }) => {
               </span>
             </BackButtonLandscape>
           </ClickedWriteup>
-        </>
+        </div>
       ) : (
         <>
           <ContentTitle className={`${loc}-title`} color={color}>
@@ -397,7 +305,7 @@ const ContentComp = ({ color, loc, locPhotos }) => {
               );
             })}
           </ContentTitle>
-          <ContentBody ref={contentBodyRef}>
+          <ContentBody ref={isNarrow ? null : scrollerRef}>
             <Writeup>
               <span style={{ color: "var(--color-white)" }}>
                 Istanbul is a major city in Turkey that straddles Europe and
@@ -408,47 +316,21 @@ const ContentComp = ({ color, loc, locPhotos }) => {
                 was for centuries the site of chariot races.
               </span>
             </Writeup>
-            <Photos className={`content-photos-${loc}`}>
-              {locPhotos.map((photo, idx) => {
-                return <StyledImg key={idx} fluid={photo.fluid} />;
-              })}
-            </Photos>
+            {isOnMobile ? (
+              <div>Hello!</div>
+            ) : (
+              <Photos
+                ref={isNarrow ? scrollerRef : null}
+                className={`content-photos-${loc}`}
+              >
+                {locPhotos.map((photo, idx) => {
+                  return <StyledImg key={idx} fluid={photo.fluid} />;
+                })}
+              </Photos>
+            )}
           </ContentBody>
         </>
       )}
-
-      {/* <ContentTitle color={color}>
-        {loc.split("").map((char, idx) => {
-          return (
-            <span key={idx} className={`${loc}-${idx + 1}`}>
-              {char}
-            </span>
-          );
-        })}
-      </ContentTitle>
-      {clickedPhotoIdx + 1 ? (
-        conjureClickedPhotoIdx(locPhotos[clickedPhotoIdx].fluid.aspectRatio)
-      ) : (
-        <ContentBody ref={contentBodyRef}>
-          <Writeup>
-            <span style={{ color: "var(--color-white)" }}>
-              Istanbul is a major city in Turkey that straddles Europe and Asia
-              across the Bosphorus Strait. Its Old City reflects cultural
-              influences of the many empires that once ruled here.
-            </span>{" "}
-            <span style={{ color: "var(--color-gray)" }}>
-              In the Sultanahmet district, the open-air, Roman-era Hippodrome
-              was for centuries the site of chariot races, and Egyptian obelisks
-              also remain.
-            </span>
-          </Writeup>
-          <Photos className={`content-photos-${loc}`}>
-            {locPhotos.map((photo, idx) => {
-              return <StyledImg key={idx} fluid={photo.fluid} />;
-            })}
-          </Photos>
-        </ContentBody>
-      )} */}
     </Content>
   );
 };
