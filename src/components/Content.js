@@ -14,7 +14,7 @@ const Content = styled.div`
   padding: 5rem 6rem;
   //   scroll-snap-align: center;
 
-  @media (max-width: 1000px) {
+  @media (max-width: 800px), (orientation: portrait) {
     height: auto;
   }
 
@@ -25,7 +25,8 @@ const Content = styled.div`
 
 const ContentTitle = styled.h2`
   font-family: var(--font-secondary), sans-serif;
-  font-size: 16rem;
+  // font-size: 16rem;
+  font-size: calc(2.5rem + 9vw);
   font-weight: 700;
   text-transform: uppercase;
   color: ${props => props.color};
@@ -45,19 +46,7 @@ const ContentTitle = styled.h2`
     -2px 2px 0px var(--color-white), -2px 1px 0px var(--color-white),
     -2px 0px 0px var(--color-white), -2px -1px 0px var(--color-white);
 
-  //   & > .delete-one {
-  //     animation: IntroBlink 0.1s cubic-bezier(0.95, 0.05, 0.795, 0.035);
-  //     animation-fill-mode: forwards;
-  //   }
-
-  //   ::before {
-  //     content: "___";
-  //     display: inline-block;
-  //     margin-right: 30px;
-  //     transform: translateY(-40%);
-  //   }
-
-  @media (max-width: 1000px) {
+  @media (max-width: 800px), (orientation: portrait) {
     font-size: calc(11vw);
     text-shadow: -1px -1px 0px var(--color-white),
       0px -1px 0px var(--color-white), 1px -1px 0px var(--color-white),
@@ -83,7 +72,8 @@ const ContentBody = styled.div`
   padding-bottom: 15px;
 
   // border: 2px solid green;
-  @media (max-width: 1000px) {
+
+  @media (max-width: 800px), (orientation: portrait) {
     height: auto;
     flex-direction: column;
   }
@@ -93,16 +83,13 @@ const Writeup = styled.div`
   font-family: var(--font-secondary), sans-serif;
   font-size: 3.6rem;
   font-weight: 200;
-  //   color: var(--color-white);
-  //   color: #e6e6e6;
   line-height: 1.6;
-  width: 40vw;
+  width: 30vw;
   flex: 0 0 auto;
   // border: 2px solid red;
-  // padding-right: 100px;
-  margin-right: 100px;
+  margin-right: 60px;
 
-  @media (max-width: 1000px) {
+  @media (max-width: 800px), (orientation: portrait) {
     width: auto;
     margin-right: 0px;
     margin-bottom: 50px;
@@ -121,7 +108,7 @@ Photos = styled.ul`
   gap: 2px;
   grid-auto-flow: column;
 
-  @media (max-width: 1000px) {
+  @media (max-width: 800px), (orientation: portrait) {
     height: 400px;
     width: auto;
     overflow: scroll;
@@ -148,7 +135,8 @@ const BackButtonLandscape = styled.button`
   bottom: 0;
   right: 0;
   font-family: var(--font-secondary), sans-serif;
-  font-size: 3.6rem;
+  // font-size: 3.6rem;
+  font-size: calc(2.4rem + 1.1vw);
   font-weight: 200;
   background: none;
   border: none;
@@ -159,12 +147,14 @@ const BackButtonLandscape = styled.button`
 
 const ClickedPhoto = styled.div`
   display: inline-flex;
-  justify-content: center;
-  width: 1084.5px;
+  align-items: center;
+  width: 82%;
+  height: ${window.innerHeight - 100}px;
   // border: 2px solid red;
 
   & .gatsby-image-wrapper {
-    width: ${props => props.aspectRatio * 610}px;
+    width: 100%;
+    max-height: 100%;
     // border: 2px solid green;
   }
 `;
@@ -183,31 +173,22 @@ const ContentComp = ({ color, loc, locPhotos }) => {
   const [clickedPhotoIdx, setClickedPhotoIdx] = useState(NaN);
   const [scrollLoc, setScrollLoc] = useState(0);
 
-  const [isNarrow, setIsNarrow] = useState(window.innerWidth < 1001);
-  const [isOnMobile, setIsOnMobile] = useState(window.innerWidth < 521);
+  const [isOnMobile, setIsOnMobile] = useState(window.innerWidth < 801);
 
   const scrollerRef = useRef();
 
   useEffect(() => {
     window.addEventListener("resize", () => {
-      if (window.innerWidth < 521) {
+      if (window.innerWidth < 801) {
         setIsOnMobile(true);
-        setIsNarrow(true);
-      } else if (window.innerWidth < 1001) {
-        setIsOnMobile(false);
-        setIsNarrow(true);
       } else {
         setIsOnMobile(false);
-        setIsNarrow(false);
       }
     });
   }, []);
 
   useEffect(() => {
     if (scrollerRef.current) {
-      // const scrollLeftMax =
-      //   scrollerRef.current.scrollWidth - scrollerRef.current.clientWidth;
-
       scrollerRef.current.scroll(scrollLoc, 0);
 
       document
@@ -264,7 +245,7 @@ const ContentComp = ({ color, loc, locPhotos }) => {
           });
         });
     }
-  }, [clickedPhotoIdx, isNarrow]);
+  }, [clickedPhotoIdx, isOnMobile]);
 
   const backClickHandler = () => {
     setClickedPhotoIdx(NaN);
@@ -277,7 +258,10 @@ const ContentComp = ({ color, loc, locPhotos }) => {
           <ClickedPhoto
             aspectRatio={locPhotos[clickedPhotoIdx].fluid.aspectRatio}
           >
-            <Img fluid={locPhotos[clickedPhotoIdx].fluid} />
+            <Img
+              fluid={locPhotos[clickedPhotoIdx].fluid}
+              imgStyle={{ objectFit: "contain" }}
+            />
           </ClickedPhoto>
 
           <ClickedWriteup>
@@ -305,29 +289,23 @@ const ContentComp = ({ color, loc, locPhotos }) => {
               );
             })}
           </ContentTitle>
-          <ContentBody ref={isNarrow ? null : scrollerRef}>
+          <ContentBody ref={isOnMobile ? null : scrollerRef}>
             <Writeup>
               <span style={{ color: "var(--color-white)" }}>
-                Istanbul is a major city in Turkey that straddles Europe and
-                Asia across the Bosphorus Strait.
+                Istanbul is a major city in Turkey
               </span>{" "}
               <span style={{ color: "var(--color-gray)" }}>
-                In the Sultanahmet district, the open-air, Roman-era Hippodrome
-                was for centuries the site of chariot races.
+                that straddles Europe and Asia across the Bosphorus Strait.
               </span>
             </Writeup>
-            {isOnMobile ? (
-              <div>Hello!</div>
-            ) : (
-              <Photos
-                ref={isNarrow ? scrollerRef : null}
-                className={`content-photos-${loc}`}
-              >
-                {locPhotos.map((photo, idx) => {
-                  return <StyledImg key={idx} fluid={photo.fluid} />;
-                })}
-              </Photos>
-            )}
+            <Photos
+              ref={isOnMobile ? scrollerRef : null}
+              className={`content-photos-${loc}`}
+            >
+              {locPhotos.map((photo, idx) => {
+                return <StyledImg key={idx} fluid={photo.fluid} />;
+              })}
+            </Photos>
           </ContentBody>
         </>
       )}
