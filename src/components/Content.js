@@ -3,16 +3,22 @@ import Img from "gatsby-image";
 import styled from "styled-components";
 import { window } from "browser-monads";
 
+import { mobileSort } from "../utils/mobileSort";
+
 const Content = styled.div`
   position: relative;
   width: 100%;
-  //   height: 100vh;
-  height: ${() => `${window.innerHeight}px`};
+  height: 100vh;
   min-height: 710px;
-  //   background-color: #ffcb53;
   background-color: ${props => props.color};
-  padding: 5rem 6rem;
+  padding: 4rem 5rem;
   //   scroll-snap-align: center;
+
+  // border: 2px solid red;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
 
   @media (max-width: 800px), (orientation: portrait) {
     height: auto;
@@ -25,13 +31,13 @@ const Content = styled.div`
 
 const ContentTitle = styled.h2`
   font-family: var(--font-secondary), sans-serif;
-  // font-size: 16rem;
   font-size: calc(2.5rem + 9vw);
   font-weight: 700;
   text-transform: uppercase;
   color: ${props => props.color};
   line-height: 1;
-  //   border: 1px solid red;
+
+  // border: 1px solid red;
 
   text-shadow: -1px -1px 0px var(--color-white), 0px -1px 0px var(--color-white),
     1px -1px 0px var(--color-white), -1px 0px 0px var(--color-white),
@@ -54,60 +60,53 @@ const ContentTitle = styled.h2`
       -1px 1px 0px var(--color-white), 0px 1px 0px var(--color-white),
       1px 1px 0px var(--color-white);
   }
-
-  // @media (max-width: 520px) {
-  //   text-shadow: -0.5px -0.5px 0px var(--color-white),
-  //     0px -0.5px 0px var(--color-white), 0.5px -0.5px 0px var(--color-white),
-  //     -0.5px 0px 0px var(--color-white), 0.5px 0px 0px var(--color-white),
-  //     -0.5px 0.5px 0px var(--color-white), 0px 0.5px 0px var(--color-white),
-  //     0.5px 0.5px 0px var(--color-white);
-  // }
 `;
 
 const ContentBody = styled.div`
-  margin-top: 50px;
-  height: 415px;
+  margin-top: 35px;
+  min-height: 440px;
   display: flex;
   overflow: scroll;
-  padding-bottom: 15px;
+  padding-bottom: 20px;
+  height: 58vh;
 
   // border: 2px solid green;
 
   @media (max-width: 800px), (orientation: portrait) {
     height: auto;
     flex-direction: column;
+    padding-bottom: 0;
   }
 `;
 
 const Writeup = styled.div`
   font-family: var(--font-secondary), sans-serif;
-  // font-size: 3.6rem;
-  font-size: calc(2rem + 1vw);
+  font-size: calc(2.2rem + 1vw);
   font-weight: 200;
   line-height: 1.6;
   width: 30vw;
   flex: 0 0 auto;
-  // border: 2px solid red;
   margin-right: 50px;
+
+  // border: 2px solid red;
 
   @media (max-width: 800px), (orientation: portrait) {
     width: auto;
     margin-right: 0px;
     margin-bottom: 50px;
-    // font-size: calc(2.5rem + 1vw);
   }
 `;
 
 let DefaultPhotos;
 DefaultPhotos = styled.ul`
-  //   width: 100vw;
   flex: 0 0 auto;
-  // border: 2px solid blue;
   display: grid;
   grid-template-rows: 1fr 1fr;
-  grid-auto-columns: 200px;
+  grid-auto-columns: minmax(210px, calc((58vh - 20px) / 2));
   gap: 2px;
   grid-auto-flow: column;
+
+  // border: 2px solid blue;
 
   @media (max-width: 800px), (orientation: portrait) {
     height: 400px;
@@ -117,7 +116,6 @@ DefaultPhotos = styled.ul`
 
   @media (max-width: 520px) {
     height: calc(300px + 2vw);
-    // grid-auto-columns: calc(100px + 2vw);
   }
 
   & ${DefaultPhotos}:nth-child(1),
@@ -127,36 +125,9 @@ DefaultPhotos = styled.ul`
   }
 `;
 
-// const MobilePhotos = styled.ul`
-//   display: grid;
-//   grid-template-rows: calc(100vh - 10rem);
-//   grid-auto-columns: 100%;
-//   gap: 2px;
-//   grid-auto-flow: column;
-//   overflow: scroll;
-//   -webkit-overflow-scrolling: touch;
-//   scroll-snap-type: x mandatory;
-//   -webkit-scroll-snap-type: mandatory;
-//   -webkit-scroll-snap-points-x: repeat(100%);
-//   scroll-snap-points-x: repeat(100%);
-//   background-color: #9485e0;
-//   // border: 2px solid red;
-
-//   & > .gatsby-image-wrapper {
-//     scroll-snap-align: start;
-//   }
-// `;
-
-// const MobilePhotosTwo = styled.ul`
-//   & > .gatsby-image-wrapper {
-//     width: 100%;
-//     margin-top: 20px;
-//   }
-// `;
-
 const MobilePhotos = styled.ul`
   display: grid;
-  height: calc(100vh - 10rem);
+  height: calc(100vmax - 10rem);
   grid-template-rows: 1fr 1fr;
   grid-auto-columns: 90%;
   gap: 2px;
@@ -169,8 +140,9 @@ const MobilePhotos = styled.ul`
   }
 
   & > .gatsby-image-wrapper {
-    // border: 1px solid red;
     background-color: #9485e0;
+
+    // border: 1px solid red;
   }
 `;
 
@@ -183,7 +155,6 @@ const BackButtonLandscape = styled.button`
   bottom: 0;
   right: 0;
   font-family: var(--font-secondary), sans-serif;
-  // font-size: 3.6rem;
   font-size: calc(2.4rem + 1.1vw);
   font-weight: 200;
   background: none;
@@ -198,11 +169,13 @@ const ClickedPhoto = styled.div`
   align-items: center;
   width: 82%;
   height: ${window.innerHeight - 100}px;
+
   // border: 2px solid red;
 
   & .gatsby-image-wrapper {
     width: 100%;
     max-height: 100%;
+
     // border: 2px solid green;
   }
 `;
@@ -212,82 +185,18 @@ const ClickedWriteup = styled.div`
   display: inline-block;
   margin-left: 30px;
   flex: 1;
-  // width: 204.5px;
   height: 610px;
+
   // border: 2px solid blue;
 `;
 
-const ContentComp = ({ color, loc, locPhotos }) => {
+const ContentComp = ({ color, loc, locPhotos, isOnMobile }) => {
   const [clickedPhotoIdx, setClickedPhotoIdx] = useState(NaN);
   const [scrollLoc, setScrollLoc] = useState(0);
 
-  const [isOnMobile, setIsOnMobile] = useState(false);
-
   const scrollerRef = useRef();
 
-  const portraitLocPhotos = [];
-  const landscapeLocPhotos = [];
-  const pairedLandscapeLocPhotos = [];
-  const mobileLocPhotos = [];
-  locPhotos.forEach(photo => {
-    if (photo.fluid.aspectRatio < 1) {
-      portraitLocPhotos.push(photo);
-    } else {
-      landscapeLocPhotos.push(photo);
-    }
-  });
-  if (landscapeLocPhotos.length % 2) {
-    for (let n = 0; n < Math.floor(landscapeLocPhotos.length / 2); n++) {
-      const group = [landscapeLocPhotos[n * 2], landscapeLocPhotos[n * 2 + 1]];
-      pairedLandscapeLocPhotos.push(group);
-    }
-    pairedLandscapeLocPhotos.push([
-      landscapeLocPhotos[landscapeLocPhotos.length - 1],
-      null
-    ]);
-  } else {
-    for (let n = 0; n < landscapeLocPhotos.length / 2; n++) {
-      const group = [landscapeLocPhotos[n * 2], landscapeLocPhotos[n * 2 + 1]];
-      pairedLandscapeLocPhotos.push(group);
-    }
-  }
-
-  const minLength = Math.min(
-    portraitLocPhotos.length,
-    pairedLandscapeLocPhotos.length
-  );
-
-  for (let n = 0; n < minLength; n++) {
-    mobileLocPhotos.push(portraitLocPhotos[n]);
-    pairedLandscapeLocPhotos[n].forEach(item => {
-      mobileLocPhotos.push(item);
-    });
-  }
-
-  if (portraitLocPhotos.length > pairedLandscapeLocPhotos.length) {
-    for (let n = minLength; n < portraitLocPhotos.length; n++) {
-      mobileLocPhotos.push(portraitLocPhotos[n]);
-    }
-  } else {
-    for (let n = minLength; n < pairedLandscapeLocPhotos.length; n++) {
-      pairedLandscapeLocPhotos[n].forEach(item => {
-        if (item) {
-          mobileLocPhotos.push(item);
-        }
-      });
-    }
-  }
-
-  useEffect(() => {
-    setIsOnMobile(window.innerWidth < 801);
-    window.addEventListener("resize", () => {
-      if (window.innerWidth < 801) {
-        setIsOnMobile(true);
-      } else {
-        setIsOnMobile(false);
-      }
-    });
-  }, []);
+  const mobileLocPhotos = mobileSort(locPhotos);
 
   useEffect(() => {
     if (scrollerRef.current) {
@@ -354,7 +263,7 @@ const ContentComp = ({ color, loc, locPhotos }) => {
   };
 
   return (
-    <Content color={color}>
+    <Content color={color} className="main-content">
       {clickedPhotoIdx + 1 ? (
         <div style={{ display: "flex" }}>
           <ClickedPhoto
@@ -391,7 +300,10 @@ const ContentComp = ({ color, loc, locPhotos }) => {
               );
             })}
           </ContentTitle>
-          <ContentBody ref={isOnMobile ? null : scrollerRef}>
+          <ContentBody
+            ref={isOnMobile ? null : scrollerRef}
+            className="content-body"
+          >
             <Writeup>
               <span style={{ color: "var(--color-white)" }}>
                 Following the footsteps of many a hundred tiny little dwarves
@@ -421,7 +333,7 @@ const ContentComp = ({ color, loc, locPhotos }) => {
                 })}
               </MobilePhotos>
             ) : (
-              <DefaultPhotos className={`content-photos-${loc}`}>
+              <DefaultPhotos className={`content-photos content-photos-${loc}`}>
                 {locPhotos.map((photo, idx) => {
                   return (
                     <StyledImg

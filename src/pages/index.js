@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { graphql, useStaticQuery } from "gatsby";
+import { window } from "browser-monads";
 
 import Defaults from "../components/Defaults";
 import Hero from "../components/Hero";
@@ -39,6 +40,19 @@ export default () => {
     }
   `).allFile.nodes;
 
+  const [isOnMobile, setIsOnMobile] = useState(false);
+
+  useEffect(() => {
+    setIsOnMobile(window.innerWidth < 801);
+    window.addEventListener("resize", () => {
+      if (window.innerWidth < 801) {
+        setIsOnMobile(true);
+      } else {
+        setIsOnMobile(false);
+      }
+    });
+  }, []);
+
   return (
     <>
       <Defaults />
@@ -57,6 +71,7 @@ export default () => {
                 return [];
               }
             })}
+            isOnMobile={isOnMobile}
           />
         );
       })}
